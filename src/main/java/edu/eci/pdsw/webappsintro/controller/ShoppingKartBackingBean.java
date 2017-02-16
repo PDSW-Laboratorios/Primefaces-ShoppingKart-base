@@ -16,6 +16,7 @@
  */
 package edu.eci.pdsw.webappsintro.controller;
 
+import edu.eci.pdsw.stubs.servicesfacadestub.CurrencyServices;
 import edu.eci.pdsw.stubs.servicesfacadestub.Producto;
 import edu.eci.pdsw.stubs.servicesfacadestub.ProductsServices;
 import java.util.List;
@@ -31,6 +32,10 @@ public class ShoppingKartBackingBean {
     
     public List<Producto> getProductos(){
         return ProductsServices.getInstance().getProductos();
+    }
+    
+    public double getTasaCambioDolar(){
+        return CurrencyServices.getInstance().getUSDExchangeRateInCOP();
     }
     
     
