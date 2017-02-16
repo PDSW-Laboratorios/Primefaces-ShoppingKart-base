@@ -14,11 +14,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
-    
     <repositories>
         <repository>
-            <id>ECI internal repository</id>
-            <url>http://profesores.is.escuelaing.edu.co/hcadavid/mvnmirror</url>
+            <id>Internal repository</id>
+            <url>http://hectorateci.github.io/maven/repository</url>
         </repository>
     </repositories>
     
@@ -46,10 +45,11 @@
         </dependency>
         <dependency>
             <groupId>org2.pdsw.stubs</groupId>
-            <artifactId>ServicesFacadeStub</artifactId>
-            <version>1.2</version>            
+            <artifactId>KartServicesFacadeStub</artifactId>
+            <version>1.4</version>            
         </dependency>
     </dependencies>
+
 
     <build>
         <plugins>

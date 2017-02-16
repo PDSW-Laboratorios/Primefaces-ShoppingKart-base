@@ -17,7 +17,7 @@
 package edu.eci.pdsw.webappsintro.controller;
 
 import edu.eci.pdsw.stubs.servicesfacadestub.Producto;
-import edu.eci.pdsw.stubs.servicesfacadestub.ServicesFacade;
+import edu.eci.pdsw.stubs.servicesfacadestub.ProductsServices;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -30,7 +30,7 @@ public class ShoppingKartBackingBean {
     
     
     public List<Producto> getProductos(){
-        return ServicesFacade.getInstance().getProductos();
+        return ProductsServices.getInstance().getProductos();
     }
     
     
