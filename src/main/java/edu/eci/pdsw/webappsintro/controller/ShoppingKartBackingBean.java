@@ -27,6 +27,8 @@ import javax.faces.bean.SessionScoped;
  *
  * @author hcadavid
  */
+@ManagedBean(name="ShoppingKartBackingBean")
+@SessionScoped
 public class ShoppingKartBackingBean {
     
     

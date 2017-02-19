@@ -1,11 +1,45 @@
-<!DOCTYPE html>
 <html xmlns="http://www.w3c.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    <h:head></h:head>
+    <h:head>
+        <style>
+            h2 {
+                margin: 1em 0 0.5em 0;
+                font-weight: 600;
+                font-family: 'Titillium Web', sans-serif;
+                position: relative;
+                text-shadow: 0 -1px 1px rgba(0,0,0,0.4);
+                font-size: 40px;
+                line-height: 40px;
+                color: 	#B22222;
+                border-bottom: 1px solid rgba(53,86,129, 0.3);
+            }
+        </style>
+        <h2>Domicilios ECI</h2>
+    </h:head>
 
     <h:body>
-        Shopping kart: under construction!
+        <p:layout style="min-width:400px;min-height:200px;">
+            <p:layoutUnit position="west" resizable="true" size="100" minSize="350" maxSize="350">
+                Carrito
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <h:form id="productsMenu">
+                    <p:treeTable value="#{ShoppingKartBackingBean.root}" var="producto">
+                        <f:facet name="header">Menú de Productos</f:facet>
+                        <p:column headerText="ID">
+                            <h:outputText value="#producto.id"/>
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#producto.nombre"/>
+                        </p:column>
+                        <p:column headerText="Precio">
+                            <h:outputText value="#producto.recioEnUSD"/>
+                        </p:column>
+                    </p:treeTable>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
     </h:body>
 
 </html>
