@@ -26,31 +26,32 @@
             </p:layoutUnit>
             <p:layoutUnit position="center">
                 <h:form id="productsMenu">
-                    <p:treeTable value="#{shoppingKartBackingBean.root}" var="producto">
+                    <p:treeTable value="#{ttShoppingKartBackingBean.root}" var="producto">
                         <f:facet name="header">Menú de Productos</f:facet>
                         <p:column headerText="ID">
-                            <h:outputText value="#producto.id"/>
+                            <h:outputText value="#{producto.id}"/>
                         </p:column>
                         <p:column headerText="Nombre">
-                            <h:outputText value="#producto.nombre"/>
+                            <h:outputText value="#{producto.nombre}"/>
                         </p:column>
                         <p:column headerText="Precio">
-                            <h:outputText value="#producto.precioEnUSD"/>
+                            <h:outputText value="#{producto.precioEnUSD}"/>
                         </p:column>
                         <p:column style="width:24px">
-                            <p:commandButton update=":form:addProductPanel" oncomplete="PF('addProductDialog').show()" title="Adicionar" label="Adicionar" iconPos="center">
-                                <f:setPropertyActionListener value="#{producto}" target="#{ShoppingKartBackingBean.selectedProduct}" />
+                            <p:commandButton update=":productsMenu:addProductPanel" oncomplete="PF('addProductDialog').show()" title="Adicionar" label="Adicionar" iconPos="center">
+                                <f:setPropertyActionListener value="#{producto}" target="#{ttShoppingKartBackingBean.selectedProduct}" />
                             </p:commandButton>
                         </p:column>
                     </p:treeTable>
-                    <p:dialog id="addDialog" header="Adicionar Producto" showEffect="fade" widgetVar="addProductDialog" modal="true" resizable="true">
+                    
+                    <p:dialog id="dialog" header="Adicionar Producto" showEffect="fade" widgetVar="addProductDialog" modal="true" resizable="true">
                         <p:outputPanel id="addProductPanel">
-                            <p:panelGrid columns="2" columnClasses="label,value" rendered="#{not empty ShoppingKartBackingBean.selectedItem}">
+                            <p:panelGrid columns="2" columnClasses="label,value" rendered="#{not empty ttShoppingKartBackingBean.selectedItem}">
                                 <h:outputLabel for="name" value="Name: " />
-                                <h:outputText id="name" value="#{ShoppingKartBackingBean.selectedItem.name}" style="font-weight:bold" />
+                                <h:outputText id="name" value="#{ttShoppingKartBackingBean.selectedItem.producto.nombre}" style="font-weight:bold" />
                                 
-                                <h:inputLabel for="quantity" value="Cantidad: "/>
-                                <h:inputText id="quatity" value="#{ShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" />
+                                <h:outputLabel for="quantity" value="Cantidad: "/>
+                                <h:inputText id="quatity" value="#{ttShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" />
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>

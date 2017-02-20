@@ -28,6 +28,8 @@ public class ProductService {
             TreeNode t = new DefaultTreeNode(p, root);
         }
         
+        System.out.println("Paso por productService");
+        
         return root;
     }
 }

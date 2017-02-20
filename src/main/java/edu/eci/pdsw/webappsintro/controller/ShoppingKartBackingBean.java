@@ -20,6 +20,7 @@ import edu.eci.pdsw.stubs.servicesfacadestub.CurrencyServices;
 import edu.eci.pdsw.stubs.servicesfacadestub.ItemPedido;
 import edu.eci.pdsw.stubs.servicesfacadestub.Producto;
 import edu.eci.pdsw.stubs.servicesfacadestub.ProductsServices;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,12 +41,13 @@ import org.primefaces.model.TreeNode;
  * @author hcadavid
  */
 
-@ManagedBean(name="ShoppingKartBackingBean")
-@SessionScoped
+@ManagedBean(name="ttShoppingKartBackingBean")
+@ViewScoped
 public class ShoppingKartBackingBean {
     
     private TreeNode root;
     private Producto selectedProduct;
+    private ItemPedido selectedItem;
     private HashMap<Producto, ItemPedido> selectedProducts;
     private List<String> currencies;
     private String currency;
@@ -57,6 +59,8 @@ public class ShoppingKartBackingBean {
         currencies.add("USD");
         currencies.add("COP");
         currency = "USD";
+        
+        System.out.println("Construido");
     }
     
     @ManagedProperty("#{productService}")
@@ -112,5 +116,26 @@ public class ShoppingKartBackingBean {
      */
     public void setCurrency(String currency) {
         this.currency = currencies.contains(currency) ? currency : this.currency;
+    }
+
+    /**
+     * @param service the service to set
+     */
+    public void setService(ProductService service) {
+        this.service = service;
+    }
+
+    /**
+     * @return the selectedItem
+     */
+    public ItemPedido getSelectedItem() {
+        return selectedItem;
+    }
+
+    /**
+     * @param selectedItem the selectedItem to set
+     */
+    public void setSelectedItem(ItemPedido selectedItem) {
+        this.selectedItem = selectedItem;
     }
 }
