@@ -17,20 +17,60 @@
 package edu.eci.pdsw.webappsintro.controller;
 
 import edu.eci.pdsw.stubs.servicesfacadestub.CurrencyServices;
+import edu.eci.pdsw.stubs.servicesfacadestub.ItemPedido;
 import edu.eci.pdsw.stubs.servicesfacadestub.Producto;
 import edu.eci.pdsw.stubs.servicesfacadestub.ProductsServices;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import org.primefaces.model.TreeNode;
 
 /**
- *
+ * Productos:
+ *  id, name, quantity, add(method)
+ *  [8:53:37 AM] Fabian Ardila Rodriguez: currency
+ *  [8:53:48 AM] Fabian Ardila Rodriguez: prize
+ *  [8:53:53 AM] Fabian Ardila Rodriguez: total
+ *  [8:56:27 AM] Alejandro Anzola Avila: productService () - productos
  * @author hcadavid
  */
+
 @ManagedBean(name="ShoppingKartBackingBean")
 @SessionScoped
 public class ShoppingKartBackingBean {
     
+    private TreeNode root;
+    private Producto selectedProduct;
+    private HashMap<Producto, ItemPedido> selectedProducts;
+    private List<String> currencies;
+    private String currency;
+    
+    public ShoppingKartBackingBean() {
+        selectedProducts = new HashMap<>();
+        
+        currencies = new ArrayList<>();
+        currencies.add("USD");
+        currencies.add("COP");
+        currency = "USD";
+    }
+    
+    @ManagedProperty("#{productService}")
+    private ProductService service;
+    
+    @PostConstruct
+    public void init() {
+        root = service.createProducts(getProductos());
+        System.out.println("Entro");
+    }
+    
+    public TreeNode getRoot() {
+        return root;
+    }
     
     public List<Producto> getProductos(){
         return ProductsServices.getInstance().getProductos();
@@ -40,5 +80,37 @@ public class ShoppingKartBackingBean {
         return CurrencyServices.getInstance().getUSDExchangeRateInCOP();
     }
     
-    
+    public double getTotal() {
+        return ProductsServices.getInstance().
+                calcularCostoCompraEnUSD((List<ItemPedido>) selectedProducts.values())
+                    * (currency.equals("COP") ? getTasaCambioDolar() : 1.0);
+    }
+
+    /**
+     * @return the selectedProduct
+     */
+    public Producto getSelectedProduct() {
+        return selectedProduct;
+    }
+
+    /**
+     * @param selectedProduct the selectedProduct to set
+     */
+    public void setSelectedProduct(Producto selectedProduct) {
+        this.selectedProduct = selectedProduct;
+    }
+
+    /**
+     * @return the currency
+     */
+    public String getCurrency() {
+        return currency;
+    }
+
+    /**
+     * @param currency the currency to set
+     */
+    public void setCurrency(String currency) {
+        this.currency = currencies.contains(currency) ? currency : this.currency;
+    }
 }
