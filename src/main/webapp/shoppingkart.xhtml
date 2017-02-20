@@ -39,25 +39,27 @@
                             <h:outputText value="#{producto.precioEnUSD}"/>
                         </p:column>
                         <p:column style="width:24px">
-                            <p:commandButton update=":productsMenu:addProductPanel" oncomplete="PF('addProductDialog').show()" title="Adicionar" label="Adicionar" iconPos="center">
+                            <p:commandButton update=":addProductPanel" oncomplete="PF('addProductDialog').show()" title="Adicionar" label="Adicionar" iconPos="center">
                                 <f:setPropertyActionListener value="#{producto}" target="#{ttShoppingKartBackingBean.selectedProduct}" />
                             </p:commandButton>
                         </p:column>
                     </p:treeTable>
                     
-                    <p:dialog id="dialog" header="Adicionar Producto" showEffect="fade" widgetVar="addProductDialog" modal="true" resizable="true">
-                        <p:outputPanel id="addProductPanel">
-                            <p:panelGrid columns="2" columnClasses="label,value" rendered="#{not empty ttShoppingKartBackingBean.selectedItem}">
-                                <h:outputLabel for="name" value="Name: " />
-                                <h:outputText id="name" value="#{ttShoppingKartBackingBean.selectedItem.producto.nombre}" style="font-weight:bold" />
-                                
-                                <h:outputLabel for="quantity" value="Cantidad: "/>
-                                <h:inputText id="quantity" value="#{ttShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" />
-                            </p:panelGrid>
-                        </p:outputPanel>
-                    </p:dialog>
+                    
                 </h:form>
             </p:layoutUnit>
+            
+            <p:dialog id="dialog" header="Adicionar Producto" showEffect="" widgetVar="addProductDialog" modal="true" resizable="true">
+                <p:outputPanel id="addProductPanel">
+                    <p:panelGrid columns="2" columnClasses="label,value" rendered="#{not empty ttShoppingKartBackingBean.selectedItem}">
+                        <h:outputLabel for="name" value="Name: " />
+                        <h:outputText id="name" value="#{ttShoppingKartBackingBean.selectedItem.producto.nombre}" style="font-weight:bold" />
+
+                        <h:outputLabel for="quantity" value="Cantidad: "/>
+                        <h:inputText id="quantity" value="#{ttShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" />
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
         </p:layout>
     </h:body>
 

@@ -109,7 +109,7 @@ public class ShoppingKartBackingBean implements Serializable {
         }
     }
     
-    public void add() {
+    public void addToKart() {
         if (selectedItem != null && 
                 !selectedProducts.containsValue(selectedItem) &&
                 selectedItem.getCantidad() > 0) {
