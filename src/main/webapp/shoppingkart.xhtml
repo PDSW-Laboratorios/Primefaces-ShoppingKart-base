@@ -39,7 +39,7 @@
                             <h:outputText value="#{producto.precioEnUSD}"/>
                         </p:column>
                         <p:column style="width:24px">
-                            <p:commandButton update=":addProductPanel" oncomplete="PF('addProductDialog').show()" title="Adicionar" label="Adicionar" iconPos="center">
+                            <p:commandButton update=":addProductPanel" oncomplete="PF('addProductDialog').show()" title="Adicionar" value="Adicionar" iconPos="center">
                                 <f:setPropertyActionListener value="#{producto}" target="#{ttShoppingKartBackingBean.selectedProduct}" />
                             </p:commandButton>
                         </p:column>
@@ -56,8 +56,11 @@
                         <h:outputText id="name" value="#{ttShoppingKartBackingBean.selectedItem.producto.nombre}" style="font-weight:bold" />
 
                         <h:outputLabel for="quantity" value="Cantidad: "/>
-                        <h:inputText id="quantity" value="#{ttShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" />
+                        <p:spinner id="quantity" value="#{ttShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" />
                     </p:panelGrid>
+                    <p:commandButton update=":addProductPanel" oncomplete="PF('addProductDialog').hide()" title="Adicionar" value="Adicionar" iconPos="center">
+                        <f:setPropertyActionListener value="#{itemPedido}" target="#{ttShoppingKartBackingBean.addToKart}" />
+                    </p:commandButton>
                 </p:outputPanel>
             </p:dialog>
         </p:layout>
