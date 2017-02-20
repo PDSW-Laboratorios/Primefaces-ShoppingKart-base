@@ -68,7 +68,7 @@
                         <h:outputText id="name" value="#{ttShoppingKartBackingBean.selectedItem.producto.nombre}" style="font-weight:bold" />
 
                         <h:outputLabel for="quantity" value="Cantidad: "/>
-                        <p:spinner id="quantity" value="#{ttShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" />
+                        <p:spinner id="quantity" value="#{ttShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" min="1"/>
                     </p:panelGrid>
                     <center>
                         <p:commandButton update=":addProductPanel" oncomplete="PF('addProductDialog').hide()" title="Adicionar" value="Adicionar">
