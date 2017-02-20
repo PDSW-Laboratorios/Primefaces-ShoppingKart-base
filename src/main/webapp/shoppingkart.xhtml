@@ -23,7 +23,20 @@
     <h:body>
         <p:layout style="min-width:400px;min-height:100px;">
             <p:layoutUnit position="west" resizable="true" size="100" minSize="350" maxSize="350">
-                Carrito
+                <h:form id="kart">
+                    <p:treeTable value="#{ttShoppingKartBackingBean.kartRoot}" value="itemPedido">
+                        <f:facet name="kartHeader">Carrito de Compras</f:facet>
+                        <p:column headerText="Item">
+                            <h:outputText value="#{ttShoppingKartBackingBean.nameItem}"/>
+                        </p:column>
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{ttShoppingKartBackingBean.quantityItem}"/>
+                        </p:column>
+                        <p:column headerText="Precio">
+                            <h:outputText value="#{ttShoppingKartBackingBean.prizeItem}"/>
+                        </p:column>
+                    </p:treeTable>
+                </h:form>
             </p:layoutUnit>
             <p:layoutUnit position="center">
                 <h:form id="productsMenu">
@@ -31,7 +44,7 @@
                         <f:facet name="header">Menú de Productos</f:facet>
                         <p:column headerText="ID">
                             <h:outputText value="#{producto.id}"/>
-                        </p:column>
+                        </p:column> 
                         <p:column headerText="Nombre">
                             <h:outputText value="#{producto.nombre}"/>
                         </p:column>
@@ -57,7 +70,7 @@
                         <h:outputLabel for="quantity" value="Cantidad: "/>
                         <h:inputText id="quantity" value="#{ttShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" />
                     </p:panelGrid>
-                    <p:commandButton update=":productsMenu:addProductPanel" oncomplete="PF('addProductDialog').hide()" value="Adicionar" iconPos="center">
+                    <p:commandButton update=":addProductPanel" oncomplete="PF('addProductDialog').hide()" value="Adicionar" iconPos="center">
                             <f:setPropertyActionListener value="#{itemPedido}" target="#{ttShoppingKartBackingBean.addToKart}" /> 
                     </p:commandButton>
                 </p:outputPanel>
