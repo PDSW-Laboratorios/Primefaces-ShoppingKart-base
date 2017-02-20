@@ -5,10 +5,13 @@
  */
 package edu.eci.pdsw.webappsintro.controller;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import edu.eci.pdsw.stubs.servicesfacadestub.Producto;
+import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
@@ -18,8 +21,8 @@ import org.primefaces.model.TreeNode;
  */
 
 @ManagedBean(name="productService")
-@ApplicationScoped
-public class ProductService {
+@SessionScoped
+public class ProductService implements Serializable {
     
     public TreeNode createProducts(List<Producto> products) {
         TreeNode root = new DefaultTreeNode(new Producto(0, "Nombre", 0.0));
@@ -28,7 +31,7 @@ public class ProductService {
             TreeNode t = new DefaultTreeNode(p, root);
         }
         
-        System.out.println("Paso por productService");
+        Logger.logMsg(Logger.DEBUG, "Paso por productService");
         
         return root;
     }

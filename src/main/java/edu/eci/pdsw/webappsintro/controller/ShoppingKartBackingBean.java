@@ -16,6 +16,7 @@
  */
 package edu.eci.pdsw.webappsintro.controller;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import edu.eci.pdsw.stubs.servicesfacadestub.CurrencyServices;
 import edu.eci.pdsw.stubs.servicesfacadestub.ItemPedido;
 import edu.eci.pdsw.stubs.servicesfacadestub.Producto;
@@ -28,7 +29,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import org.primefaces.model.TreeNode;
 
 /**
@@ -41,8 +41,8 @@ import org.primefaces.model.TreeNode;
  * @author hcadavid
  */
 
-@ManagedBean(name="ttShoppingKartBackingBean")
 @SessionScoped
+@ManagedBean(name="ttShoppingKartBackingBean")
 public class ShoppingKartBackingBean implements Serializable {
     
     private TreeNode root;
@@ -53,6 +53,8 @@ public class ShoppingKartBackingBean implements Serializable {
     private String currency;
     
     public ShoppingKartBackingBean() {
+        Logger.setLevel(Logger.DEBUG);
+        
         selectedProducts = new HashMap<>();
         
         currencies = new ArrayList<>();
@@ -60,7 +62,9 @@ public class ShoppingKartBackingBean implements Serializable {
         currencies.add("COP");
         currency = "USD";
         
-        System.out.println("Construido");
+        Logger.logMsg(Logger.INFO, "Se inicializo el servidor");
+        
+        Logger.logMsg(Logger.DEBUG, "Construido " + this.getClass().getName());
     }
     
     @ManagedProperty("#{productService}")
@@ -69,7 +73,7 @@ public class ShoppingKartBackingBean implements Serializable {
     @PostConstruct
     public void init() {
         root = service.createProducts(getProductos());
-        System.out.println("Entro");
+        Logger.logMsg(Logger.DEBUG, "Tabla de productos inicializada");
     }
     
     public TreeNode getRoot() {
@@ -94,6 +98,8 @@ public class ShoppingKartBackingBean implements Serializable {
      * @return the selectedProduct
      */
     public Producto getSelectedProduct() {
+        Logger.logMsg(Logger.DEBUG, "Se obtiene el producto seleccionado " +
+                selectedProduct != null ? selectedProduct.getNombre() : "null");
         return selectedProduct;
     }
 
@@ -101,19 +107,31 @@ public class ShoppingKartBackingBean implements Serializable {
      * @param selectedProduct the selectedProduct to set
      */
     public void setSelectedProduct(Producto selectedProduct) {
+        Logger.logMsg(Logger.DEBUG, "Se especifica el producto seleccionado "
+                + "para anadirlo al carrito " + 
+                selectedProduct != null ? selectedProduct.getNombre() : "null");
         this.selectedProduct = selectedProduct;
         if (selectedProducts.containsKey(selectedProduct)) {
-            selectedItem = selectedProducts.get(selectedProduct);
+            setSelectedItem(selectedProducts.get(selectedProduct));
         } else {
-            selectedItem = new ItemPedido(selectedProduct, 1);
+            Logger.logMsg(Logger.DEBUG, "Es la primera vez que se agrega un item");
+            setSelectedItem(new ItemPedido(selectedProduct, 1));
         }
     }
     
     public void addToKart() {
         if (selectedItem != null && 
-                !selectedProducts.containsValue(selectedItem) &&
-                selectedItem.getCantidad() > 0) {
+                !selectedProducts.containsKey(selectedItem.getProducto())) {
             selectedProducts.put(selectedItem.getProducto(), selectedItem);
+            
+            Logger.logMsg(Logger.DEBUG, "Se agrego al carrito: " + 
+                    selectedItem.getProducto().getNombre() + " " +
+                    selectedItem.getCantidad());
+        }
+        
+        Logger.logMsg(Logger.DEBUG,"Productos en carrito: ");
+        for(ItemPedido i : selectedProducts.values()) {
+            Logger.logMsg(Logger.DEBUG,"\t" + i.getProducto().getNombre() + " " + i.getCantidad());
         }
     }
 
@@ -121,6 +139,8 @@ public class ShoppingKartBackingBean implements Serializable {
      * @return the currency
      */
     public String getCurrency() {
+        Logger.logMsg(Logger.DEBUG, "Se obtiene el string de la moneda. ("
+                + currency + ")");
         return currency;
     }
 
@@ -128,6 +148,7 @@ public class ShoppingKartBackingBean implements Serializable {
      * @param currency the currency to set
      */
     public void setCurrency(String currency) {
+        Logger.logMsg(Logger.DEBUG, "Se especifica la moneda " + currency);
         this.currency = currencies.contains(currency) ? currency : this.currency;
     }
 
@@ -135,6 +156,7 @@ public class ShoppingKartBackingBean implements Serializable {
      * @param service the service to set
      */
     public void setService(ProductService service) {
+        Logger.logMsg(Logger.DEBUG, "Se establece el servicio para la tabla");
         this.service = service;
     }
 
@@ -142,6 +164,30 @@ public class ShoppingKartBackingBean implements Serializable {
      * @return the selectedItem
      */
     public ItemPedido getSelectedItem() {
+        Logger.logMsg(Logger.DEBUG, "Se obtiene el item actual " + 
+                (selectedItem != null ? selectedItem.getProducto().getNombre() : "null"));
         return selectedItem;
+    }
+
+    /**
+     * @param selectedItem the selectedItem to set
+     */
+    public void setSelectedItem(ItemPedido selectedItem) {
+        Logger.logMsg(Logger.DEBUG, "Se especifica el item " + 
+                (selectedItem != null ? selectedItem.getProducto().getNombre() : "null"));
+        this.selectedItem = (selectedItem != null ? selectedItem : this.selectedItem);
+    }
+    
+    public int getCantidad() {
+        Logger.logMsg(Logger.DEBUG, "Se obtiene la cantidad " + selectedItem.getCantidad());
+        return selectedItem != null ? selectedItem.getCantidad() : 0;
+    }
+    
+    public void setCantidad(int cantidad) {
+        Logger.logMsg(Logger.DEBUG, "Se intenta cambiar la cantidad a " + cantidad);
+        if (selectedItem != null && cantidad > 0) {
+            Logger.logMsg(Logger.DEBUG, "Se especifica la cantidad del item " + cantidad);
+            selectedItem.setCantidad(cantidad);
+        }
     }
 }
