@@ -3,6 +3,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+        <title>Domicilios ECI</title>
         <style>
             h2 {
                 margin: 1em 0 0.5em 0;
@@ -51,7 +52,7 @@
                                 <h:outputText id="name" value="#{ttShoppingKartBackingBean.selectedItem.producto.nombre}" style="font-weight:bold" />
                                 
                                 <h:outputLabel for="quantity" value="Cantidad: "/>
-                                <h:inputText id="quatity" value="#{ttShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" />
+                                <h:inputText id="quantity" value="#{ttShoppingKartBackingBean.selectedItem.cantidad}" style="font-weight:bold" />
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>

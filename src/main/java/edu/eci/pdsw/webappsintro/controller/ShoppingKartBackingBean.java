@@ -42,8 +42,8 @@ import org.primefaces.model.TreeNode;
  */
 
 @ManagedBean(name="ttShoppingKartBackingBean")
-@ViewScoped
-public class ShoppingKartBackingBean {
+@SessionScoped
+public class ShoppingKartBackingBean implements Serializable {
     
     private TreeNode root;
     private Producto selectedProduct;
@@ -102,6 +102,19 @@ public class ShoppingKartBackingBean {
      */
     public void setSelectedProduct(Producto selectedProduct) {
         this.selectedProduct = selectedProduct;
+        if (selectedProducts.containsKey(selectedProduct)) {
+            selectedItem = selectedProducts.get(selectedProduct);
+        } else {
+            selectedItem = new ItemPedido(selectedProduct, 1);
+        }
+    }
+    
+    public void add() {
+        if (selectedItem != null && 
+                !selectedProducts.containsValue(selectedItem) &&
+                selectedItem.getCantidad() > 0) {
+            selectedProducts.put(selectedItem.getProducto(), selectedItem);
+        }
     }
 
     /**
@@ -130,12 +143,5 @@ public class ShoppingKartBackingBean {
      */
     public ItemPedido getSelectedItem() {
         return selectedItem;
-    }
-
-    /**
-     * @param selectedItem the selectedItem to set
-     */
-    public void setSelectedItem(ItemPedido selectedItem) {
-        this.selectedItem = selectedItem;
     }
 }
