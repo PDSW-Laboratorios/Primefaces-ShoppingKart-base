@@ -11,8 +11,8 @@
                 font-family: 'Titillium Web', sans-serif;
                 position: relative;
                 text-shadow: 0 -1px 1px rgba(0,0,0,0.4);
-                font-size: 40px;
-                line-height: 40px;
+                font-size: 50px;
+                line-height: 50px;
                 color: 	#B22222;
                 border-bottom: 1px solid rgba(53,86,129, 0.3);
             }
@@ -21,9 +21,17 @@
     </h:head>
 
     <h:body>
+        <h:form id="currencyForm">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel for="currency" value="Moneda:" />
+                <p:selectOneButton id="currency" value="#{ttShoppingKartBackingBean.currency}" onchange="$('#currencyForm').submit()">
+                    <f:selectItem itemLabel="USD" itemValue="USD" />
+                    <f:selectItem itemLabel="COP" itemValue="COP" />
+                </p:selectOneButton>
+            </h:panelGrid>
+        </h:form>
         <p:layout style="min-width:400px;min-height:200px;">
             <p:layoutUnit position="west" resizable="true" size="100" minSize="350" maxSize="350">
-                Carrito
             </p:layoutUnit>
             <p:layoutUnit position="center">
                 <h:form id="productsMenu">
@@ -40,7 +48,7 @@
                         <p:column headerText="Precio">
                             <center>
                                 <h:outputText value="#{producto.precioEnUSD}"/>
-                            </center>
+                            </center>   
                         </p:column>
                         <p:column style="width:24px">
                             <p:commandButton update=":addProductPanel" oncomplete="PF('addProductDialog').show()" title="Adicionar" value="Adicionar" iconPos="center">
